@@ -47,6 +47,18 @@ export const loginValidation = async (data, res, next) => {
   
 };
 
+
+export const connectValidation = async (req, res, next) => {
+  const Schema = Joi.object({
+    clientId: Joi.string().required(),
+    clientSecret: Joi.string().required(),
+    redirect_uri: Joi.string().required(),
+    code: Joi.string().required()
+  });
+return Schema.validate(req);
+ 
+};
+
 // export const updateUserValidate = (data) => {
 //   const Schema = Joi.object({
 //     email: Joi.string().email().required(),

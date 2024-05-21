@@ -14,7 +14,11 @@ const configSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
-    tokenExpire: {
+    accessTokenExpire: {
+      type: Number,
+      trim: true,
+    },
+    refreshTokenExpire: {
       type: Number,
       trim: true,
     },
@@ -29,7 +33,12 @@ const configSchema = new mongoose.Schema(
     role: {
       type: Number,
     },
+    redirect_uri: {
+      type: String,
+      trim: true,
   },
+},
+
   { timestamps: true }
 );
-module.exports = new mongoose.model("config", configSchema);
+module.exports = mongoose.models.config || new mongoose.model("config", configSchema);
