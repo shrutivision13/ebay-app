@@ -3,21 +3,12 @@ import { NextResponse } from 'next/server';
 
 export function middleware(request) {
     const path = request.nextUrl.pathname;
+    console.log('path :>> ', path);
     const isLoginPage = path === '/login';
     const isDashboardPage = path === '/dashboard';
     const isBlank = path === '/';
     const token = request.cookies.get('token')?.value || '';
-
-    const userRoutes = [
-        "/",
-        "/login",
-    ];
-
-    const adminRoutes = [
-        "/dashboard/admin/profile",
-        "/dashboard/admin/change-password",
-    ];
-
+    console.log('token ---------------------:>> ', token);
 
     // if (token) {
     // 	const decoded = jwtDecode(token)
@@ -39,5 +30,5 @@ export function middleware(request) {
 }
 
 export const config = {
-    matcher: ["/", "/login", "/dashboard", "/user","/api"],
+    matcher: ["/", "/login", "/dashboard", "/user", '/settings', '/products'],
 };
