@@ -1,14 +1,51 @@
 import Joi from "joi";
 
-// export const createUserValidate = (data) => {
-//   const Schema = Joi.object({
-//     email: Joi.string().email().required(),
-//     name: Joi.string().required(),
-//     salesArea: Joi.array().required(),
-//     role: Joi.string().required(),
-//   });
-//   return Schema.validate(data);
-// };
+export const createCustomerValidate = (data) => {
+  const Schema = Joi.object({
+    fullName: Joi.string().required().trim().messages({
+        "string.empty": "Name should not be empty!",
+      }),
+      email: Joi.string()
+        .regex(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+        .required()
+        .messages({
+          "string.empty": "Email should not be empty!",
+          "string.pattern.base": "Email should be contain valid character!",
+        }),
+      password: Joi.string().required().trim().min(6).max(15).messages({
+        "string.empty": "Password should not be empty!",
+        "string.min": "Password should contain mininum 6 characters!",
+        "string.max": "Password is too long!",
+      }),
+      phoneNumber: Joi.string()
+        .required()
+        .regex(/^[0-9]{10}$/)
+        .messages({ "string.pattern.base": `Phone number must have 10 digits!` })
+        .required(),
+  });
+  return Schema.validate(data);
+};
+
+export const loginValidation = async (data, res, next) => {
+  const Schema = Joi.object({
+    email: Joi.string()
+      .regex(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+      .required()
+      .messages({
+        "any.required": "Email is required field!",
+        "string.empty": "Email should not be empty!",
+        "string.pattern.base": "Email should be contain valid character!",
+      }),
+    password: Joi.string().required().min(6).max(15).messages({
+      "any.required": "Password is required field!",
+      "string.empty": "Password should not be empty!",
+      "string.min": "Password should contain mininum 6 characters!",
+      "string.max": "Password is too long!",
+    }),
+  });
+  return Schema.validate(data);
+  
+};
 
 // export const updateUserValidate = (data) => {
 //   const Schema = Joi.object({
