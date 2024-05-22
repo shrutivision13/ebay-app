@@ -30,7 +30,7 @@ function Login() {
                     setIsLoading(false)
                     let userData = {
                         authToken: res.authToken,
-                        customerId: res.customerId,
+                        userId: res.userId,
                         name: res.name,
                         role: res.role == 1 ? "Admin" : "User"
                     }

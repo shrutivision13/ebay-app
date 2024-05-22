@@ -14,7 +14,7 @@ export const connectToDB = async () => {
     if (!findEmail) {
       const password = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
       const newCustomer = await userModel({
-        fullName:"Admin",
+        userName:"Admin",
         email,
         password:password ,
         phoneNumber:process.env.ADMIN_PHONE_NUMBER,

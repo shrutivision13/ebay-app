@@ -19,7 +19,7 @@ function User() {
     let columns = [
         {
             name: "User Name",
-            selector: (row) => row.fullName,
+            selector: (row) => row.userName,
             sortable: true,
         },
         {
@@ -86,7 +86,7 @@ function User() {
         if (openedModal == 'edit') {
             let EditData = {
                 email: data.email,
-                fullName: data.userName,
+                userName: data.userName,
                 phoneNumber: data.phoneNumber
             }
             ApiEditUser(selectedUserData._id, EditData)
@@ -111,7 +111,7 @@ function User() {
             setIsLoading(true)
             let AddData = {
                 email: data.email,
-                fullName: data.userName,
+                userName: data.userName,
                 password: data.password,
                 phoneNumber: data.phoneNumber
             }

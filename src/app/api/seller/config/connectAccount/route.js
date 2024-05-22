@@ -25,9 +25,9 @@ export const POST = async (request) => {
 
     const token = request.cookies.get("token")?.value || "";
     const authData = jwt.verify(token, process.env.TOKEN_SECRET);
-    const customerId = authData?.customer_id;
-    if (!customerId && !authData) {
-        return NextResponse.json({ message: "Please provide valid token.", isSuccess: false }, { status: 203 });
+    const userId = authData?.userId;
+    if (!userId && !authData) {
+        return NextResponse.json({ message: "Please provide valid token.", success: false }, { status: 203 });
     }
     const authBody = {
       grant_type: "authorization_code",
@@ -43,7 +43,7 @@ export const POST = async (request) => {
     })
     const data = res?.data 
     const checkConfig = await configModel.findOne({
-      customerId,
+      userId,
     });
     if (!checkConfig) {
       const newData = new configModel({
@@ -52,7 +52,7 @@ export const POST = async (request) => {
         accessTokenExpire: data.expires_in,
         refreshTokenExpire: data.refresh_token_expires_in,
         redirect_uri,
-        customerId,
+        userId,
         clientId,
         clientSecret,
         role: 1,
@@ -77,14 +77,14 @@ export const POST = async (request) => {
           { new: true }
         )
         .then((config) => {
-          return NextResponse.json({ data: config, isSuccess: true },{ status: 200 });
+          return NextResponse.json({ data: config, success: true },{ status: 200 });
         })
         .catch((error) => {
           return NextResponse.json(
             {
             error: error.message,
             message: "Something went wrong, please try again!",
-            isSuccess: false,
+            success: false,
           }, { status: 500 });
         });
     }

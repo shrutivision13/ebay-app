@@ -9,11 +9,11 @@ export const GET = async (request) => {
     //   const { error } = archivedFormValidate(reqBody);
     const token = request.cookies.get("token")?.value || "";
     const authData = jwt.verify(token, process.env.TOKEN_SECRET);
-    const customerId = authData?.customer_id;
-    if (!customerId && !authData) {
+    const userId = authData?.userId;
+    if (!userId && !authData) {
         return NextResponse.json({ message: "Please provide valid token.", isSuccess: false }, { status: 203 });
     }
-    const checkConfig = await configModel.findOne({ customerId });
+    const checkConfig = await configModel.findOne({ userId });
     let connect = true;
     if (!checkConfig) {
       connect = false;

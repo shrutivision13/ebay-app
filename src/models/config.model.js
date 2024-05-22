@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const configSchema = new mongoose.Schema(
   {
-    customerId: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "customer",
+      ref: "users",
     },
     accessToken: {
       type: String,

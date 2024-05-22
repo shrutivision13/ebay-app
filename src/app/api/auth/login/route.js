@@ -39,7 +39,7 @@ export async function POST(request) {
       if (isMatch) {
         const authToken = jwt.sign(
           {
-            customer_id: findEmail._id,
+            userId: findEmail._id,
             email,
           },
           process.env.TOKEN_SECRET,
@@ -48,10 +48,10 @@ export async function POST(request) {
         const response = NextResponse.json({
           message: "Login successfully.",
           authToken,
-          customerId: findEmail._id,
+          userId: findEmail._id,
           role: findEmail.role,
           success: true,
-          name: findEmail.fullName,
+          name: findEmail.userName,
         },{
             status: 200
         });

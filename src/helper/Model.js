@@ -15,7 +15,7 @@ export const SimpleModel = ({ handleClose, onSubmit, openedModal, selectedUserDa
 
     useEffect(() => {
         if (openedModal === "edit") {
-            setValue('userName', selectedUserData.fullName);
+            setValue('userName', selectedUserData.userName);
             setValue('email', selectedUserData.email);
             setValue('password', selectedUserData.password);
             setValue('phoneNumber', selectedUserData.phoneNumber);

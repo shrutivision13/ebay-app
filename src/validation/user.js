@@ -2,7 +2,7 @@ import Joi from "joi";
 
 export const createCustomerValidate = (data) => {
   const Schema = Joi.object({
-    fullName: Joi.string().required().trim().messages({
+    userName: Joi.string().required().trim().messages({
         "string.empty": "Name should not be empty!",
       }),
       email: Joi.string()

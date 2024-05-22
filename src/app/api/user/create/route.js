@@ -21,7 +21,7 @@ export const POST = async (request) => {
             );
         }
 
-        const { fullName, email, password, phoneNumber } = reqBody
+        const { userName, email, password, phoneNumber } = reqBody
 
         const findEmail = await userModel.findOne({ email });
         if (findEmail) {
@@ -38,7 +38,7 @@ export const POST = async (request) => {
 
         const Password = await bcrypt.hash(password, 10);
         const user = await userModel({
-            fullName,
+            userName,
             email,
             password: Password,
             phoneNumber,
