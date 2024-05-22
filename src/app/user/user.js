@@ -4,7 +4,6 @@ import { SimpleModel } from '@/helper/Model';
 import { DataTable, IconPencil, IconTrash, IconUserPlus } from '@/helper/imports/Imports'
 import { ApiAddUser, ApiDeleteUser, ApiEditUser, ApiGetUser } from '@/api-wrapper/ApiUser';
 import Toast from '@/helper/toast/Toast';
-import Loader from '@/helper/loader/loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { handleRowPerPage, loading } from '../Redux/Features/CommonSlice';
 
@@ -144,7 +143,6 @@ function User() {
     }, []);
     return (
         <>
-            {loading && <Loader isLoading={loading} />}
             {showModal ? (
                 <>
                     <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>

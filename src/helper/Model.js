@@ -5,7 +5,6 @@ import { useForm, IconEyeOff, IconEye } from '@/helper/imports/Imports';
 import '../style/layout.css';
 
 export const SimpleModel = ({ handleClose, onSubmit, openedModal, selectedUserData, showModal }) => {
-    console.log('openedModal :>> ', openedModal);
     const {
         register,
         formState: { errors },
