@@ -55,11 +55,11 @@ function Login() {
     return (
         <>
             <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-                <div className="relative py-3 sm:max-w-xl sm:mx-auto">
+                <div className="relative py-3 xs:w-[92%] xs:mx-auto sm:max-w-xl sm:mx-auto md:w-[32rem] md:max-w-2xl">
                     <div
-                        className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-sky-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
+                        className="absolute inset-0 bg-gradient-to-r from-slate-500 to-slate-800 shadow-lg transform  rotateAnimation transition duration-500 ease-in-out  xs:rounded-3xl">
                     </div>
-                    <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+                    <div className="relative px-4 py-10 bg-white shadow-lg xs:rounded-3xl sm:p-20">
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="max-w-md mx-auto">
                                 <div>
@@ -85,7 +85,7 @@ function Login() {
 
                                         {errors.password && <span className='text-xs font-semibold text-red-500' >Password is required</span>}
                                         <div className="relative">
-                                            <button className={`bg-cyan-500 text-white rounded-md px-2 py-1 w-full ${errors.password || errors.email && "cursor-not-allowed"}`} type="submit" disabled={errors.password || errors.email}>Submit</button>
+                                            <button className={`bg-slate-600 text-white rounded-md px-2 py-1 w-full ${errors.password || errors.email && "cursor-not-allowed"}`} type="submit" disabled={errors.password || errors.email}>Submit</button>
                                         </div>
                                     </div>
                                 </div>
