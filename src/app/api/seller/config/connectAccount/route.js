@@ -58,6 +58,8 @@ export const POST = async (request) => {
         role: 1,
       });
       newData.save();
+      getInventoryFromEbay();
+
      return NextResponse.json({
         message: "Thank you for connecting account.",
         data: newData,
@@ -77,7 +79,10 @@ export const POST = async (request) => {
           { new: true }
         )
         .then((config) => {
+          getInventoryFromEbay();
           return NextResponse.json({ data: config, success: true },{ status: 200 });
+
+        
         })
         .catch((error) => {
           return NextResponse.json(
@@ -101,3 +106,9 @@ export const POST = async (request) => {
     );
   }
 };
+
+
+function getInventoryFromEbay() {
+  axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/seller/inventory`).then((data) => data).catch((err) => {
+  });
+}

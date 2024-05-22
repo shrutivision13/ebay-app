@@ -26,7 +26,6 @@ export const GET = async (request) => {
           }
         })
         const data = res?.data 
-        console.log("checkConfig.map ~ data:", data)
     
          return  await configModel
             .findByIdAndUpdate(
