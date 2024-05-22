@@ -1,11 +1,12 @@
 "use client"
 import { route } from '@/helper/route/router';
 import * as React from 'react';
-import Permission from '@/helper/permission/permission';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 function Sidebar() {
 
+    const userRole = useSelector((state) => state.common.userDetails)?.role;
     const [nav, setNav] = React.useState([]);
     const [isNavOpen, setIsNavOpen] = React.useState(false);
 
@@ -14,11 +15,13 @@ function Sidebar() {
     }
 
     React.useEffect(() => {
-        if (Permission()?.role != "Admin") {
-            setNav(route.filter(x => x.name !== "Settings" || x.name !== "User"));
-        } else {
-            setNav(route);
-        }
+        const filteredNav = route.reduce((acc, curr) => {
+            if (userRole === "Admin" || curr.name !== "User") {
+                acc.push(curr);
+            }
+            return acc;
+        }, []);
+        setNav(filteredNav);
     }, [route]);
 
     return (

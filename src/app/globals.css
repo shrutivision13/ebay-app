@@ -31,12 +31,7 @@ body {
     transform: rotate(360deg);
   }
 }
-.loader {
-  animation: loader-rotate 1s linear infinite;
-  border-right-color: transparent;
-}
-
 .loader-background{
-  background: rgba(0, 0, 0, 0.5);
-
+  background: rgb(54 43 43 / 78%);
+  z-index: 100;
 }

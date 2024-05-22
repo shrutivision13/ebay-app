@@ -5,6 +5,7 @@ import { useForm, IconEyeOff, IconEye } from '@/helper/imports/Imports';
 import '../style/layout.css';
 
 export const SimpleModel = ({ handleClose, onSubmit, openedModal, selectedUserData, showModal }) => {
+    console.log('openedModal :>> ', openedModal);
     const {
         register,
         formState: { errors },
@@ -19,7 +20,6 @@ export const SimpleModel = ({ handleClose, onSubmit, openedModal, selectedUserDa
             setValue('email', selectedUserData.email);
             setValue('password', selectedUserData.password);
             setValue('phoneNumber', selectedUserData.phoneNumber);
-
         }
     }, [selectedUserData])
     return (
@@ -29,7 +29,7 @@ export const SimpleModel = ({ handleClose, onSubmit, openedModal, selectedUserDa
                     <div
                         className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none "
                     >
-                        <div className="relative modal-width">
+                        <div className="relative my-6 mx-3 modal-width">
                             {/*content*/}
                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                                 {/*header*/}
@@ -97,10 +97,6 @@ export const SimpleModel = ({ handleClose, onSubmit, openedModal, selectedUserDa
                                         </div>
                                     </div>
                                     {/*footer*/}
-                                    <div className="px-4 py-3 sm:px-6 flex gap-2 justify-end" >
-                                        <button type="button" className="w-60 rounded-md border px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"> Cancel </button>
-                                        <button type="button" className="w-60 rounded-md border px-4 py-2 bg-emerald-500 text-base font-medium text-black hover:bg-blue-700 sm:ml-3 sm:w-auto sm:text-sm"> Save </button>
-                                    </div>
 
                                     <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
                                         <button
@@ -115,7 +111,7 @@ export const SimpleModel = ({ handleClose, onSubmit, openedModal, selectedUserDa
                                             type="submit"
                                         >
                                             {
-                                                openedModal === "edit" ? "Save" : "Delete User"
+                                                openedModal === "edit" ? "Save" : openedModal == "add" ? "Add User" : "Delete User"
                                             }
                                         </button>
                                     </div>

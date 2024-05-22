@@ -1,11 +1,15 @@
 'use client'
-const Loader = ({ isLoading }) => {
+
+import { useSelector } from "react-redux";
+
+const Loader = () => {
+    const isLoading = useSelector(state => state.common.isLoading);
     return (
         <>
             {isLoading &&
                 <>
-                    <div className="h-screen flex items-center justify-center loader-background">
-                        <div className="w-12 h-12 border-4 rounded-full loader"></div>
+                    <div className="h-screen w-full absolute flex items-center justify-center loader-background">
+                        <img src="https://www.svgrepo.com/show/70469/loading.svg" alt="Loading icon" className={`w-20 h-20 animate-spin`} />
                     </div>
                 </>
             }

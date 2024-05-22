@@ -5,16 +5,20 @@ import { DataTable, IconPencil, IconTrash, IconUserPlus } from '@/helper/imports
 import { ApiAddUser, ApiDeleteUser, ApiEditUser, ApiGetUser } from '@/api-wrapper/ApiUser';
 import Toast from '@/helper/toast/Toast';
 import Loader from '@/helper/loader/loader';
+import { useDispatch, useSelector } from 'react-redux';
+import { handleRowPerPage, loading } from '../Redux/Features/CommonSlice';
 
 function User() {
+
+    const dispatch = useDispatch()
+    const rowsPerPage = useSelector((state) => state.common.rowPerPage);
+
     const [currentPage, setcurrentPage] = useState(1);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
     const [totalRecords, setTotalRecords] = useState(0);
     const [showModal, setShowModal] = useState(false);
     const [openedModal, setOpenedModal] = useState('edit');
     const [selectedUserData, setSelectedUserData] = useState()
     const [tableData, setTableData] = useState([])
-    const [loading, setIsLoading] = useState(false)
 
     let columns = [
         {
@@ -82,78 +86,49 @@ function User() {
         setShowModal(false)
     }
 
+    const handleApiCall = async (apiFunction, data) => {
+
+        dispatch(loading(true))
+        try {
+            const res = await apiFunction(data);
+            if (res.success) {
+                Toast.success(res.message);
+                handleList();
+                dispatch(loading(false))
+            } else {
+                Toast.error(res.message);
+                dispatch(loading(false))
+            }
+        } catch (err) {
+            dispatch(loading(false))
+            Toast.error("something went to wrong!!");
+        } finally {
+            dispatch(loading(false))
+            setShowModal(false);
+        }
+    };
+
     const onSubmit = (data) => {
         if (openedModal == 'edit') {
             let EditData = {
                 email: data.email,
                 userName: data.userName,
                 phoneNumber: data.phoneNumber
-            }
-            ApiEditUser(selectedUserData._id, EditData)
-                .then((res) => {
-                    if (res.success) {
-                        Toast.success(res.message);
-                        handleList();
-                        setIsLoading(false)
-                        setShowModal(false)
-                    } else {
-                        setIsLoading(false)
-                        Toast.error(res.message);
-                    }
-                })
-                .catch((err) => {
-                    setShowModal(false);
-                    setIsLoading(false)
-                    Toast.error("something went to wrong!!");
-                });
-
+            };
+            handleApiCall(ApiEditUser, { id: selectedUserData._id, data: EditData });
         } else if (openedModal == 'add') {
-            setIsLoading(true)
             let AddData = {
                 email: data.email,
                 userName: data.userName,
                 password: data.password,
                 phoneNumber: data.phoneNumber
-            }
-            ApiAddUser(AddData).then((res) => {
-                if (res.success) {
-                    Toast.success(res.message);
-                    // reset();
-                    // setShow(false);
-                    handleList();
-                    setIsLoading(false)
-                    setShowModal(false)
-                } else {
-                    setIsLoading(false)
-                    Toast.error(res.message);
-                }
-            })
-                .catch((err) => {
-                    setShowModal(false);
-                    setIsLoading(false)
-                    Toast.error("something went to wrong!!");
-                });
+            };
+            handleApiCall(ApiAddUser, AddData);
         } else {
-            ApiDeleteUser(selectedUserData._id)
-                .then((res) => {
-                    if (res.success) {
-                        Toast.success(res.message);
-                        handleList();
-                        setIsLoading(false)
-                        setShowModal(false)
-                    } else {
-                        setIsLoading(false)
-                        Toast.error(res.message);
-                    }
-                })
-                .catch((err) => {
-                    setShowModal(false);
-                    setIsLoading(false)
-                    Toast.error("something went to wrong!!");
-                });
+            handleApiCall(ApiDeleteUser, selectedUserData._id);
         }
-
     }
+
 
     const handleOpenModel = (modalType, row) => {
         setShowModal(true);
@@ -165,6 +140,7 @@ function User() {
 
     useEffect(() => {
         handleList();
+        dispatch(handleRowPerPage(10))
     }, []);
     return (
         <>
@@ -199,7 +175,7 @@ function User() {
                         paginationServer
                         paginationPerPage={rowsPerPage}
                         onChangeRowsPerPage={(event) => {
-                            setRowsPerPage(parseInt(event));
+                            dispatch(handleRowPerPage(event))
                             handleList(currentPage, event);
                         }}
                         onChangePage={(page) => {

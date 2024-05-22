@@ -6,31 +6,36 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
 import { useEffect } from "react";
 import { usePathname, useRouter } from 'next/navigation'
-import Permission from "@/helper/permission/permission";
 import Loader from "@/helper/loader/loader";
+import { Providers } from "./Redux/StoreProvider";
+import PrelineScript from "@/components/prelineScript";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
-  const pathname = usePathname()
-  const router = useRouter()
+  const pathname = usePathname();
+  const router = useRouter();
+
+  let auth = window.localStorage.getItem("authToken");
   useEffect(() => {
-    console.log('router :>> ', pathname);
-    if (!Permission()?.authToken) {
+    if (!auth) {
       router.push('/login')
     } else {
-      // if (Permission()?.authToken && pathname === '/login') {
-      //   router.push('/dashboard')
-      // }
+      if (auth && pathname === '/login') {
+        router.push('/dashboard')
+      }
     }
   }, [pathname]);
 
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ToastContainer />
-        <Loader />
-        {children}
+        <PrelineScript />
+        <Providers>
+          <ToastContainer />
+          <Loader />
+          {children}
+        </Providers>
       </body>
     </html>
   );
