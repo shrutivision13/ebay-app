@@ -50,7 +50,6 @@ function Settings() {
     }
 
     const ConnectAccount = async (data) => {
-        console.log('data :>> ', data);
         await ApiConnectAccount(data)
             .then((res) => {
                 if (res) {
@@ -86,7 +85,6 @@ function Settings() {
             let local = JSON.parse(localStorage.getItem("user_config"))
             let data;
             dispatch(loading(true))
-            debugger
             if (userRole === "Admin") {
                 data = {
                     clientId: local.clientId || "",
@@ -96,7 +94,6 @@ function Settings() {
                 }
                 ConnectAccount(data)
             } else {
-                debugger
                 return getSellerAccountDetails()
                     .then((config) => {
                         data = {
